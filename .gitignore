@@ -34,4 +34,4 @@ Debug/
 Release/
 sample/
 .vs/
-.user
+*.user

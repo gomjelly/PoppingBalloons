@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
-#include "ui_PoppingBalloons.h"
+
 
 class PoppingBalloons : public QMainWindow
 {
@@ -12,5 +12,5 @@ public:
     ~PoppingBalloons();
 
 private:
-    Ui::PoppingBalloonsClass ui;
+
 };
