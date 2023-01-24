@@ -1,5 +1,12 @@
 #pragma once
 #include <QMainWindow>
+#include <QTimer>
+#include <QLabel>
+#include <QPushButton>
+
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
 
 class GraphicsScene;
 
@@ -13,8 +20,21 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget* parent = nullptr);
 
+private slots:
+    void Open();
+    void Close();
+    void update_window();
+
 private:
 
-    GraphicsScene* scene;
-    QGraphicsView* view;
+    //GraphicsScene* scene;
+    //QGraphicsView* view;
+    VideoCapture cap;
+    Mat frame;
+
+    QPushButton* openBtn;
+    QPushButton* closeBtn;
+    QLabel* label;
+    QTimer* timer;
+    QImage qt_image;
 };
