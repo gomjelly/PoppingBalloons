@@ -1,4 +1,9 @@
 <RCC>
-    <qresource prefix="PoppingBalloons">
+    <qresource prefix="/PoppingBalloons">
+        <file>resource/gfx/catch.png</file>
+        <file>resource/gfx/catch-action.png</file>
+        <file>resource/gfx/shooter.png</file>
+        <file>resource/gfx/shooter-action.png</file>
+        <file>resource/gfx/shooter-idle.png</file>
     </qresource>
 </RCC>

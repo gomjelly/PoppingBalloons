@@ -125,7 +125,7 @@ void MainWindow::Close()
 
     label->setPixmap(QPixmap::fromImage(qt_image));
 
-    label->resize(label->pixmap()->size());
+    //label->resize(label->pixmap()->size());
 
     cout << "camera is closed" << endl;
 }
@@ -140,5 +140,5 @@ void MainWindow::update_window()
 
     label->setPixmap(QPixmap::fromImage(qt_image));
 
-    label->resize(label->pixmap()->size());
+    //label->resize(label->pixmap()->size());
 }
