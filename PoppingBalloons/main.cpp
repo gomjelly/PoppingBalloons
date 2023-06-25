@@ -1,4 +1,3 @@
-#include "PoppingBalloons.h"
 #include "MainWindow.h"
 #include <QtWidgets/QApplication>
 #include <QGraphicsScene>
@@ -23,92 +22,92 @@ int MOG();
 
 int main(int argc, char *argv[])
 {
-    //VideoCapture cap(0);
+    VideoCapture cap(0);
 
-    //if (!cap.isOpened())
-    //{
-    //    printf("Can't open the camera");
-    //    return -1;
-    //}
+    if (!cap.isOpened())
+    {
+        printf("Can't open the camera");
+        return -1;
+    }
 
-    //cap.set(CAP_PROP_AUTOFOCUS, 1);
-    //cap.set(CAP_PROP_AUTO_EXPOSURE, 1);
+    cap.set(CAP_PROP_AUTOFOCUS, 1);
+    cap.set(CAP_PROP_AUTO_EXPOSURE, 1);
 
-    //Mat frame;
-    //
-    //// auto bs = createBackgroundSubtractorMOG2();
-    //auto bs = createBackgroundSubtractorKNN();
-    //bs->setDetectShadows(false);
-    //
-    //int currentFrame = 0;
+    Mat frame;
+    
+    // auto bs = createBackgroundSubtractorMOG2();
+    auto bs = createBackgroundSubtractorKNN();
+    bs->setDetectShadows(false);
+    
+    int currentFrame = 0;
 
-    //while (1)
-    //{       
-    //    bool re = cap.read(frame);
+    while (1)
+    {       
+        bool re = cap.read(frame);
 
-    //    if (!re) break;
+        if (!re) break;
 
-    //    flip(frame, frame, 1);        
-    //    
-    //    if (currentFrame < SKIP_FRAMES)
-    //    {
-    //        currentFrame++;
-    //    }
-    //    else if (currentFrame == SKIP_FRAMES)
-    //    {
-    //        currentFrame++;
-    //        double exposure = cap.get(CAP_PROP_EXPOSUREPROGRAM);            
-    //        double focus = cap.get(CAP_PROP_FOCUS);
+        flip(frame, frame, 1);        
+        
+        if (currentFrame < SKIP_FRAMES)
+        {
+            currentFrame++;
+        }
+        else if (currentFrame == SKIP_FRAMES)
+        {
+            currentFrame++;
+            double exposure = cap.get(CAP_PROP_EXPOSUREPROGRAM);            
+            double focus = cap.get(CAP_PROP_FOCUS);
 
-    //        cap.set(CAP_PROP_AUTOFOCUS, 0);
-    //        cap.set(CAP_PROP_AUTO_EXPOSURE, 0);            
+            cap.set(CAP_PROP_AUTOFOCUS, 0);
+            cap.set(CAP_PROP_AUTO_EXPOSURE, 0);            
 
-    //        cap.set(CAP_PROP_EXPOSURE, exposure);            
-    //        cap.set(CAP_PROP_FOCUS, focus);
+            cap.set(CAP_PROP_EXPOSURE, exposure);            
+            cap.set(CAP_PROP_FOCUS, focus);
 
-    //        //cap.set(CAP_PROP_SETTINGS, 1);
-    //    }
-    //    else
-    //    {
-    //        Mat gray, back, fgmask;
+            //cap.set(CAP_PROP_SETTINGS, 1);
+        }
+        else
+        {
+            Mat gray, back, fgmask;
 
-    //        cvtColor(frame, gray, COLOR_BGR2GRAY);
+            cvtColor(frame, gray, COLOR_BGR2GRAY);
 
-    //        bs->apply(gray, fgmask);
-    //        bs->getBackgroundImage(back);
+            bs->apply(gray, fgmask);
+            bs->getBackgroundImage(back);
 
-    //        Mat image_labels, stats, centroids;
-    //        int numOfLables = connectedComponentsWithStats(fgmask, image_labels, stats, centroids, 8);
+            Mat image_labels, stats, centroids;
+            int numOfLables = connectedComponentsWithStats(fgmask, image_labels, stats, centroids, 8);
 
-    //        // 라벨링 된 이미지에 각각 직사각형으로 둘러싸기 
-    //        for (int i = 1; i < numOfLables; i++) {
-    //            int area = stats.at<int>(i, CC_STAT_AREA);
-    //            int left = stats.at<int>(i, CC_STAT_LEFT);
-    //            int top = stats.at<int>(i, CC_STAT_TOP);
-    //            int width = stats.at<int>(i, CC_STAT_WIDTH);
-    //            int height = stats.at<int>(i, CC_STAT_HEIGHT);
+            // 라벨링 된 이미지에 각각 직사각형으로 둘러싸기 
+            for (int i = 1; i < numOfLables; i++) {
+                int area = stats.at<int>(i, CC_STAT_AREA);
+                int left = stats.at<int>(i, CC_STAT_LEFT);
+                int top = stats.at<int>(i, CC_STAT_TOP);
+                int width = stats.at<int>(i, CC_STAT_WIDTH);
+                int height = stats.at<int>(i, CC_STAT_HEIGHT);
 
-    //            if (area < 100) continue;
-    //            rectangle(frame, Point(left, top), Point(left + width, top + height), Scalar(0, 0, 255), 2);
-    //        }
-    //        
-    //        cv::imshow("camera img2", back);
-    //        cv::imshow("camera img3", fgmask);
-    //    }
+                if (area < 100) continue;
+                rectangle(frame, Point(left, top), Point(left + width, top + height), Scalar(0, 0, 255), 2);
+            }
+            
+            cv::imshow("camera img2", back);
+            cv::imshow("camera img3", fgmask);
+        }
 
-    //    cv::imshow("camera img1", frame);
+        cv::imshow("camera img1", frame);
 
-    //    if (waitKey(30) == 27)
-    //        break;
-    //}
+        if (waitKey(30) == 27)
+            break;
+    }
 
-    //cap.release();
-    //cv::destroyAllWindows();
+    cap.release();
+    cv::destroyAllWindows();
 
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    //QApplication a(argc, argv);
+    //MainWindow w;
+    //w.show();
+    //return a.exec();
 }
 
 int runningAverage()
