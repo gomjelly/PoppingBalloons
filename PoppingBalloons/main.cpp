@@ -1,6 +1,9 @@
 #include "PoppingBalloons.h"
 #include "MainWindow.h"
 #include <QtWidgets/QApplication>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/videoio.hpp>

@@ -107,6 +107,7 @@
     <QtMoc Include="PoppingBalloons.h" />
     <ClCompile Include="GraphicsScene.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="PixmapItem.cpp" />
     <ClCompile Include="PoppingBalloons.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -115,6 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GraphicsScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PixmapItem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

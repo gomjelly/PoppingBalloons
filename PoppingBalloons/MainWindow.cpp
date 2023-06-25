@@ -1,9 +1,10 @@
 #include "MainWindow.h"
 
 #include "GraphicsScene.h"
+#include "PixmapItem.h"
 
-//Qt
 #include <QGraphicsView>
+#include <QGraphicsItem>
 #include <QApplication>
 #include <QMenu>
 #include <QMenuBar>
@@ -83,7 +84,42 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
     label = new QLabel(this);
 
-    vbox->addWidget(label);
+    //
+
+    QGraphicsScene scene;
+    scene.setSceneRect(-300, -300, 600, 600);
+    //! [1] //! [2]
+    scene.setItemIndexMethod(QGraphicsScene::NoIndex);
+    //! [2]
+
+    for (int i = 0; i < 3; ++i) {
+        QGraphicsPixmapItem* mouse = new QGraphicsPixmapItem(QPixmap(":/resource/gfx/shooter.png"));
+
+        mouse->setPos(::sin((i * 6.28) / 3) * 200,
+            ::cos((i * 6.28) / 3) * 200);
+        mouse->setZValue(3);
+        scene.addItem(mouse);
+    }
+    
+    //! [4]
+    //! 
+    //m_cameraView = new QPixmap();
+    view = new QGraphicsView(&scene, label);
+    //view->setRenderHint(QPainter::Antialiasing);
+    //view->setBackgroundBrush(*m_cameraView);
+    //! [4] //! [5]
+    //view->setCacheMode(QGraphicsView::CacheBackground);
+    //view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    //view->setDragMode(QGraphicsView::ScrollHandDrag);
+    //! [5] //! [6]
+    //view->setWindowTitle(QT_TRANSLATE_NOOP(QGraphicsView, "Colliding Mice"));
+    //view->resize(600, 600);
+    //view->show();
+
+    //
+
+    vbox->addWidget(view);
+    //vbox->addWidget(label);
     vbox->addStretch(1);
 
     vbox->addLayout(hbox);
@@ -124,8 +160,11 @@ void MainWindow::Close()
     qt_image = QImage((const unsigned char*)(image.data), image.cols, image.rows, QImage::Format_RGB888);
 
     label->setPixmap(QPixmap::fromImage(qt_image));
+    
+    //m_cameraView->fromImage(qt_image);
+    //view->setBackgroundBrush(qt_image);
 
-    //label->resize(label->pixmap()->size());
+    label->resize(label->pixmap()->size());
 
     cout << "camera is closed" << endl;
 }
@@ -139,6 +178,8 @@ void MainWindow::update_window()
     qt_image = QImage((const unsigned char*)(frame.data), frame.cols, frame.rows, QImage::Format_RGB888);
 
     label->setPixmap(QPixmap::fromImage(qt_image));
+    //m_cameraView->fromImage(qt_image);
+    //view->setBackgroundBrush(qt_image);
 
-    //label->resize(label->pixmap()->size());
+    label->resize(label->pixmap()->size());
 }

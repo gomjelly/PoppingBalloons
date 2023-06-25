@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/PoppingBalloons">
+    <qresource prefix="/">
         <file>resource/gfx/catch.png</file>
         <file>resource/gfx/catch-action.png</file>
         <file>resource/gfx/shooter.png</file>

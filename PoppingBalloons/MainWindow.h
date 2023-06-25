@@ -32,9 +32,12 @@ private:
     VideoCapture cap;
     Mat frame;
 
+    QGraphicsView* view;
+
     QPushButton* openBtn;
     QPushButton* closeBtn;
     QLabel* label;
+    QPixmap* m_cameraView;
     QTimer* timer;
     QImage qt_image;
 };
