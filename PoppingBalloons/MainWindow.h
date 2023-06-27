@@ -21,22 +21,21 @@ public:
     MainWindow(QWidget* parent = nullptr);
 
 private slots:
-    void Open();
-    void Close();
+    void open();
+    void close();
     void update_window();
 
 private:
 
-    //GraphicsScene* scene;
-    //QGraphicsView* view;
-    VideoCapture cap;
-    Mat frame;
+    VideoCapture m_cap;
+    Mat m_frame;
 
-    QGraphicsView* view;
+    QPushButton* m_openButton;
+    QPushButton* m_closeButton;
+    QPushButton* m_backgroundButton;
+    QPushButton* m_startButton;
+    QLabel* m_cameraLabel;
 
-    QPushButton* openBtn;
-    QPushButton* closeBtn;
-    QLabel* label;
     QPixmap* m_cameraView;
     QTimer* timer;
     QImage qt_image;

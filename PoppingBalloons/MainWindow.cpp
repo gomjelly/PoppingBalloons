@@ -1,7 +1,6 @@
 #include "MainWindow.h"
 
-#include <QGraphicsView>
-#include <QGraphicsItem>
+#include <iostream>
 #include <QApplication>
 #include <QMenu>
 #include <QMenuBar>
@@ -10,7 +9,7 @@
 #include <QApplication>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <iostream>
+#include <QGridLayout>
 
 using namespace std;
 
@@ -23,13 +22,37 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
     //videoWidget->videoSurface()->present(img);
     //videoWidget->show();
 
+    m_openButton = new QPushButton("open");
+    m_closeButton = new QPushButton("close");
+    m_backgroundButton = new QPushButton("background");
+    m_startButton = new QPushButton("start");
+
+    m_cameraLabel = new QLabel;
+
+    QGridLayout* layout = new QGridLayout;
+    layout->addWidget(m_cameraLabel, 0, 0, 10, 1);
+    layout->addWidget(m_openButton, 0, 1);
+    layout->addWidget(m_closeButton, 1, 1);
+    layout->addWidget(m_backgroundButton, 2, 1);
+    layout->addWidget(m_startButton, 3, 1);
+    layout->setColumnStretch(0, 1);
+    layout->setRowStretch(9, 1);
+
+    QWidget* centralWidget = new QWidget;
+    centralWidget->setLayout(layout);
+    setCentralWidget(centralWidget);
+
+    connect(m_openButton, SIGNAL(clicked()), this, SLOT(open()));
+    connect(m_closeButton, SIGNAL(clicked()), this, SLOT(close()));
+
+    timer = new QTimer(this);
 }
 
-void MainWindow::Open()
+void MainWindow::open()
 {
-    cap.open(0);
+    m_cap.open(0);
 
-    if (!cap.isOpened())
+    if (!m_cap.isOpened())
     {
         cout << "camera is not open" << endl;
     }
@@ -42,36 +65,36 @@ void MainWindow::Open()
     }
 }
 
-void MainWindow::Close()
+void MainWindow::close()
 {
     disconnect(timer, &QTimer::timeout, this, &MainWindow::update_window);
-    cap.release();
+    m_cap.release();
 
-    Mat image = Mat::zeros(frame.size(), CV_8UC3);
+    Mat image = Mat::zeros(m_frame.size(), CV_8UC3);
 
     qt_image = QImage((const unsigned char*)(image.data), image.cols, image.rows, QImage::Format_RGB888);
 
-    label->setPixmap(QPixmap::fromImage(qt_image));
+    m_cameraLabel->setPixmap(QPixmap::fromImage(qt_image));
     
     //m_cameraView->fromImage(qt_image);
     //view->setBackgroundBrush(qt_image);
 
-    label->resize(label->pixmap()->size());
+    //m_cameraLabel->resize(m_cameraLabel->pixmap()->size());
 
     cout << "camera is closed" << endl;
 }
 
 void MainWindow::update_window()
 {
-    cap >> frame;
+    m_cap >> m_frame;
 
-    cvtColor(frame, frame, COLOR_BGR2RGB);
+    cvtColor(m_frame, m_frame, COLOR_BGR2RGB);
 
-    qt_image = QImage((const unsigned char*)(frame.data), frame.cols, frame.rows, QImage::Format_RGB888);
+    qt_image = QImage((const unsigned char*)(m_frame.data), m_frame.cols, m_frame.rows, QImage::Format_RGB888);
 
-    label->setPixmap(QPixmap::fromImage(qt_image));
+    m_cameraLabel->setPixmap(QPixmap::fromImage(qt_image));
     //m_cameraView->fromImage(qt_image);
     //view->setBackgroundBrush(qt_image);
 
-    label->resize(label->pixmap()->size());
+    //m_cameraLabel->resize(label->pixmap()->size());
 }
