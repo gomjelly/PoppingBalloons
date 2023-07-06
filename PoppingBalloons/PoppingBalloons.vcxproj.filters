@@ -21,6 +21,9 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="QML">
+      <UniqueIdentifier>{e8dd2475-71e9-4318-9c50-451a54ca663a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="PoppingBalloons.qrc">
@@ -39,5 +42,10 @@
     <QtMoc Include="MainWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\QuickMain.qml">
+      <Filter>QML</Filter>
+    </None>
   </ItemGroup>
 </Project>

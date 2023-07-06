@@ -6,7 +6,7 @@
 
 #include <opencv2/opencv.hpp>
 
-using namespace cv;
+//using namespace cv;
 
 class GraphicsScene;
 
@@ -27,8 +27,8 @@ private slots:
 
 private:
 
-    VideoCapture m_cap;
-    Mat m_frame;
+    cv::VideoCapture m_cap;
+    cv::Mat m_frame;
 
     QPushButton* m_openButton;
     QPushButton* m_closeButton;

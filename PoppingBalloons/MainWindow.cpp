@@ -10,6 +10,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
+#include <QQuickView>
 
 using namespace std;
 
@@ -29,8 +30,13 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 
     m_cameraLabel = new QLabel;
 
+    QQuickView* qmlView = new QQuickView();
+    qmlView->setSource(QUrl("qrc:/resource/QuickMain.qml"));
+    QWidget* container = QWidget::createWindowContainer(qmlView, this);
+
     QGridLayout* layout = new QGridLayout;
     layout->addWidget(m_cameraLabel, 0, 0, 10, 1);
+    layout->addWidget(container, 10, 0, 10, 1);
     layout->addWidget(m_openButton, 0, 1);
     layout->addWidget(m_closeButton, 1, 1);
     layout->addWidget(m_backgroundButton, 2, 1);
@@ -70,7 +76,7 @@ void MainWindow::close()
     disconnect(timer, &QTimer::timeout, this, &MainWindow::update_window);
     m_cap.release();
 
-    Mat image = Mat::zeros(m_frame.size(), CV_8UC3);
+    cv::Mat image = cv::Mat::zeros(m_frame.size(), CV_8UC3);
 
     qt_image = QImage((const unsigned char*)(image.data), image.cols, image.rows, QImage::Format_RGB888);
 
@@ -88,7 +94,7 @@ void MainWindow::update_window()
 {
     m_cap >> m_frame;
 
-    cvtColor(m_frame, m_frame, COLOR_BGR2RGB);
+    cvtColor(m_frame, m_frame, cv::COLOR_BGR2RGB);
 
     qt_image = QImage((const unsigned char*)(m_frame.data), m_frame.cols, m_frame.rows, QImage::Format_RGB888);
 
