@@ -23,6 +23,8 @@ public:
 private slots:
     void open();
     void close();
+    void capture();
+    void start();
     void update_window();
 
 private:
@@ -34,7 +36,14 @@ private:
     QPushButton* m_closeButton;
     QPushButton* m_backgroundButton;
     QPushButton* m_startButton;
-    QLabel* m_cameraLabel;
+    QLabel* m_gameView;
+    
+    // test
+    QLabel* m_captureImage;
+    QLabel* m_diffImage;
+
+    bool m_startGame = false;
+    cv::Ptr<cv::BackgroundSubtractorKNN> bs;
 
     QPixmap* m_cameraView;
     QTimer* timer;

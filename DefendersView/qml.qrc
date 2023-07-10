@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>../resource/gfx/catch.png</file>
+    </qresource>
+</RCC>
