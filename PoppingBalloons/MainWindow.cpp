@@ -10,7 +10,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
-#include <QQuickView>
+//#include <QQuickView>
 
 using namespace std;
 
@@ -18,7 +18,7 @@ using namespace std;
 #define IMAGE_HEIGHT 1080 / 4
 #define TIMAGE_WIDTH 1920 / 8 
 #define TIMAGE_HEIGHT 1080 / 8 
-#define RESIZE_RATIO 10
+#define RESIZE_RATIO 4
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent)
 {
@@ -142,8 +142,8 @@ void MainWindow::update_window()
 
         cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
         
-        bs->apply(gray, fgmask);
-        //bs->getBackgroundImage(back);
+        m_backgroundSubtractor->apply(gray, fgmask);
+        //m_backgroundSubtractor->getBackgroundImage(back);
 
         //cv::Mat image_labels, stats, centroids;
         //int numOfLables = connectedComponentsWithStats(fgmask, image_labels, stats, centroids, 8);
@@ -163,6 +163,10 @@ void MainWindow::update_window()
         //cv::imshow("camera back", back);
         //cv::imshow("camera fgmask", fgmask);
         //cv::imshow("camera frame", frame);
+        auto kernel = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
+        cv::morphologyEx(fgmask, fgmask, cv::MORPH_DILATE, kernel);        
+        cv::morphologyEx(fgmask, fgmask, cv::MORPH_ERODE, kernel);
+        cv::morphologyEx(fgmask, fgmask, cv::MORPH_ERODE, kernel);
 
         m_diffImage->setPixmap(QPixmap::fromImage(QImage((const unsigned char*)(fgmask.data), fgmask.cols, fgmask.rows, QImage::Format_Grayscale8)));
 
@@ -201,8 +205,8 @@ void MainWindow::start()
 {
     m_startGame = true;
 
-    //if (bs) bs->clear();
+    //if (m_backgroundSubtractor) m_backgroundSubtractor->clear();
 
-    bs = cv::createBackgroundSubtractorKNN();
-    bs->setDetectShadows(false);
+    m_backgroundSubtractor = cv::createBackgroundSubtractorKNN();
+    m_backgroundSubtractor->setDetectShadows(false);
 }

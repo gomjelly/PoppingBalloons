@@ -6,4 +6,9 @@ Window {
     width: 640
     height: 480
     title: qsTr("Hello World")
+    Rectangle {
+        width : 10
+        height : 10
+        color : "#cccccc"
+    }
 }

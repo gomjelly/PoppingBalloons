@@ -43,7 +43,7 @@ private:
     QLabel* m_diffImage;
 
     bool m_startGame = false;
-    cv::Ptr<cv::BackgroundSubtractorKNN> bs;
+    cv::Ptr<cv::BackgroundSubtractorKNN> m_backgroundSubtractor;
 
     QPixmap* m_cameraView;
     QTimer* timer;

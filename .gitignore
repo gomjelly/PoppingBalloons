@@ -33,5 +33,6 @@
 Debug/
 Release/
 sample/
+DefendersView/
 .vs/
 *.user

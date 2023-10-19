@@ -37,9 +37,9 @@ int main(int argc, char *argv[])
 
     //Mat frame;
     //
-    //// auto bs = createBackgroundSubtractorMOG2();
-    //auto bs = createBackgroundSubtractorKNN();
-    //bs->setDetectShadows(false);
+    //// auto m_backgroundSubtractor = createBackgroundSubtractorMOG2();
+    //auto m_backgroundSubtractor = createBackgroundSubtractorKNN();
+    //m_backgroundSubtractor->setDetectShadows(false);
     //
     //int currentFrame = 0;
 
@@ -75,8 +75,8 @@ int main(int argc, char *argv[])
 
     //        cvtColor(frame, gray, COLOR_BGR2GRAY);
 
-    //        bs->apply(gray, fgmask);
-    //        bs->getBackgroundImage(back);
+    //        m_backgroundSubtractor->apply(gray, fgmask);
+    //        m_backgroundSubtractor->getBackgroundImage(back);
 
     //        Mat image_labels, stats, centroids;
     //        int numOfLables = connectedComponentsWithStats(fgmask, image_labels, stats, centroids, 8);
@@ -233,9 +233,9 @@ int MOG()
 
     Mat frame;
 
-    // auto bs = createBackgroundSubtractorMOG2();
-    auto bs = createBackgroundSubtractorKNN();
-    bs->setDetectShadows(false);
+    // auto m_backgroundSubtractor = createBackgroundSubtractorMOG2();
+    auto m_backgroundSubtractor = createBackgroundSubtractorKNN();
+    m_backgroundSubtractor->setDetectShadows(false);
 
     int currentFrame = 0;
 
@@ -271,8 +271,8 @@ int MOG()
 
             cvtColor(frame, gray, COLOR_BGR2GRAY);
 
-            bs->apply(gray, fgmask);
-            bs->getBackgroundImage(back);
+            m_backgroundSubtractor->apply(gray, fgmask);
+            m_backgroundSubtractor->getBackgroundImage(back);
 
             Mat image_labels, stats, centroids;
             int numOfLables = connectedComponentsWithStats(fgmask, image_labels, stats, centroids, 8);
